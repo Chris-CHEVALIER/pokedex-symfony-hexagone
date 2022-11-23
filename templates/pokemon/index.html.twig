@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <ul>
+    {% for pokemon in pokemons %}
+        <li>{{ pokemon.name }}
+        <img src="{{pokemon.image}}" alt="{{ pokemon.name }}" width="220px">
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

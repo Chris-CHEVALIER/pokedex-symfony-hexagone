@@ -1,31 +1,41 @@
 <?php
 
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity()]
+#[ORM\Table(name: "pokemon")]
 class Pokemon {
-    
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private int $id;
 
     #[Assert\NotBlank(message:"Le numéro est obligatoire !")]
+    #[ORM\Column(type: "integer")]
     private int $number;
 
-    /**
-     * @Assert\NotBlank(message="Le nom est obligatoire !")
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 30,
-     *      minMessage = "Le nom est trop court",
-     *      maxMessage = "Le nom est trop long"
-     * )
-     */
+    #[Assert\NotBlank(message:"Le nom est obligatoire !")]
+    #[Assert\Length(
+        min : 3,
+        max : 30,
+        minMessage : "Le nom est trop court",
+        maxMessage : "Le nom est trop long"
+    )]
+
+    #[ORM\Column(type: "string", length: 255)]
     private string $name;
 
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private string $area;
+
+    #[ORM\Column(type: "text")]
     private string $image;
-    private string $shout;
-    private string $type1;
-    private string $type2;
+
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Type", inversedBy: "pokemons")]
+    private Type $type;
 
     /**
      * Get the value of id
@@ -128,61 +138,21 @@ class Pokemon {
     }
 
     /**
-     * Get the value of shout
+     * Get the value of type
      */ 
-    public function getShout()
+    public function getType()
     {
-        return $this->shout;
+        return $this->type;
     }
 
     /**
-     * Set the value of shout
+     * Set the value of type
      *
      * @return  self
      */ 
-    public function setShout($shout)
+    public function setType($type)
     {
-        $this->shout = $shout;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of type1
-     */ 
-    public function getType1()
-    {
-        return $this->type1;
-    }
-
-    /**
-     * Set the value of type1
-     *
-     * @return  self
-     */ 
-    public function setType1($type1)
-    {
-        $this->type1 = $type1;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of type2
-     */ 
-    public function getType2()
-    {
-        return $this->type2;
-    }
-
-    /**
-     * Set the value of type2
-     *
-     * @return  self
-     */ 
-    public function setType2($type2)
-    {
-        $this->type2 = $type2;
+        $this->type = $type;
 
         return $this;
     }
