@@ -24,6 +24,7 @@ class PokemonController extends AbstractController
     #[Route("/create", name: "create")]
     public function create(Request $request, ManagerRegistry $doctrine)
     {
+        //$this->denyAccessUnlessGranted("IS_AUTHENTICATED_FULLY");
         $pokemon = new Pokemon();
         $form = $this->createForm(PokemonType::class, $pokemon);
 
