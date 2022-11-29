@@ -14,6 +14,7 @@ class PokemonController extends AbstractController
     #[Route("/", name: "index")]
     public function index(ManagerRegistry $doctrine)
     {
+        dump($this->getUser());
         $pokemonRepository = $doctrine->getRepository(Pokemon::class);
         $pokemons = $pokemonRepository->findAll();
         return $this->render("pokemon/index.html.twig", [
@@ -24,6 +25,8 @@ class PokemonController extends AbstractController
     #[Route("/create", name: "create")]
     public function create(Request $request, ManagerRegistry $doctrine)
     {
+        //$this->denyAccessUnlessGranted("ROLE_ADMIN");
+        
         $pokemon = new Pokemon();
         $form = $this->createForm(PokemonType::class, $pokemon);
 
