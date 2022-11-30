@@ -9,7 +9,8 @@ class PokemonControllerTest extends WebTestCase
     public function testIndex()
     {
         $client = static::createClient();
-        $client->request("GET", "/");
+        $client->request("GET", "/login");
+        
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
