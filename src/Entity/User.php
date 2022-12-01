@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    //private UserPasswordHasherInterface $passwordHasher;
+    private UserPasswordHasherInterface $passwordHasher;
     
     public function __construct(UserPasswordHasherInterface $passwordHasher) {
         $this->passwordHasher = $passwordHasher;
@@ -90,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $this->passwordHasher->hashPassword($this, $password);
+        $this->password = $password; //$this->passwordHasher->hashPassword($this, $password);
         return $this;
     }
 
